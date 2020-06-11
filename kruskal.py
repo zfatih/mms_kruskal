@@ -23,6 +23,8 @@ edgeTaken = "#c96a44"
 nodeCheck = "red"
 edgeCheck = "red"
 
+font = "Arial 13"
+
 c = Canvas(root, height=800, width=800, bg=background)
 c.pack(side=LEFT)
 
@@ -67,7 +69,7 @@ playButton_window = c.create_window(246, 10, anchor=NW, window=playButton)
 scrollbar = Scrollbar(root)
 scrollbar.pack(side=RIGHT, fill=Y)
 
-listbox = Listbox(root, height=800, width=200, font=20, yscrollcommand=scrollbar.set)
+listbox = Listbox(root, height=800, width=200, font=font, yscrollcommand=scrollbar.set)
 listbox.pack(side=LEFT)
 
 scrollbar.config(command=listbox.yview)
@@ -127,7 +129,7 @@ class Edge:
 
 
 class Graph: 
-    def __init__(self,vertices, points): 
+    def __init__(self, vertices, points): 
         self.V= vertices 
         self.points = points
         self.graph = []
@@ -313,7 +315,7 @@ class Graph:
                     if action == "pause":
                         paused = True
                     if action == "play":
-                        if self.hasCompletedOnce == False or i < len(self.steps):
+                        if self.hasCompletedOnce == False or i < len(self.steps) - 1:
                             paused = False
 
             state = self.steps[i]['stateBefore']
