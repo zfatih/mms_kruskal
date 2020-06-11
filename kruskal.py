@@ -24,6 +24,7 @@ nodeCheck = "red"
 edgeCheck = "red"
 
 font = "Arial 13"
+fontButton = "Helvetica 9"
 
 c = Canvas(root, height=800, width=800, bg=background)
 c.pack(side=LEFT)
@@ -46,25 +47,25 @@ def play():
     q.put("play")
 
 
-backButton = Button(root, text = "Korak nazad", command = stepBack, anchor = W)
-backButton.configure(width = 9, activebackground = "#33B5E5", relief = FLAT)
+backButton = Button(root, text = "Korak nazad", command = stepBack, anchor = W, font=fontButton)
+backButton.configure(width = 10, activebackground = "#33B5E5", relief = FLAT)
 backButton_window = c.create_window(10, 10, anchor=NW, window=backButton)
 
-speedUpButton = Button(root, text = "Ubrzaj", command = speedUp, anchor = W)
+speedUpButton = Button(root, text = "Ubrzaj", command = speedUp, anchor = W, font=fontButton)
 speedUpButton.configure(width = 5, activebackground = "#33B5E5", relief = FLAT)
-speedUpButton_window = c.create_window(90, 10, anchor=NW, window=speedUpButton)
+speedUpButton_window = c.create_window(97, 10, anchor=NW, window=speedUpButton)
 
-slowDownButton = Button(root, text = "Uspori", command = slowDown, anchor = W)
+slowDownButton = Button(root, text = "Uspori", command = slowDown, anchor = W, font=fontButton)
 slowDownButton.configure(width = 5, activebackground = "#33B5E5", relief = FLAT)
-slowDownButton_window = c.create_window(142, 10, anchor=NW, window=slowDownButton)
+slowDownButton_window = c.create_window(142+7, 10, anchor=NW, window=slowDownButton)
 
-pauseButton = Button(root, text = "Pauza", command = pause, anchor = W)
+pauseButton = Button(root, text = "Pauza", command = pause, anchor = W, font=fontButton)
 pauseButton.configure(width = 5, activebackground = "#33B5E5", relief = FLAT)
-pauseButton_window = c.create_window(194, 10, anchor=NW, window=pauseButton)
+pauseButton_window = c.create_window(194+7, 10, anchor=NW, window=pauseButton)
 
-playButton = Button(root, text = "Nastavi", command = play, anchor = W)
+playButton = Button(root, text = "Nastavi", command = play, anchor = W, font=fontButton)
 playButton.configure(width = 6, activebackground = "#33B5E5", relief = FLAT)
-playButton_window = c.create_window(246, 10, anchor=NW, window=playButton)
+playButton_window = c.create_window(246+7, 10, anchor=NW, window=playButton)
 
 scrollbar = Scrollbar(root)
 scrollbar.pack(side=RIGHT, fill=Y)
