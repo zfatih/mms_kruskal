@@ -24,7 +24,7 @@ nodeCheck = "red"
 edgeCheck = "red"
 
 font = "Arial 13"
-fontButton = "Helvetica 9"
+fontButton = "Courier 10"
 
 c = Canvas(root, height=800, width=800, bg=background)
 c.pack(side=LEFT)
@@ -46,26 +46,29 @@ def pause():
 def play():
     q.put("play")
 
+buttonFrame = Frame(root, bg=background)
+buttonFrame.place(x=10, y=10)
 
-backButton = Button(root, text = "Step back", command = stepBack, anchor = W, font=fontButton)
-backButton.configure(width = 10, activebackground = "#33B5E5", relief = FLAT)
-backButton_window = c.create_window(10, 10, anchor=NW, window=backButton)
+buttonData = [
+    ("Step back", stepBack),
+    ("Speed up", speedUp),
+    ("Slow down", slowDown),
+    ("Pause", pause),
+    ("Continue", play)
+]
 
-speedUpButton = Button(root, text = "Speed up", command = speedUp, anchor = W, font=fontButton)
-speedUpButton.configure(width = 5, activebackground = "#33B5E5", relief = FLAT)
-speedUpButton_window = c.create_window(97, 10, anchor=NW, window=speedUpButton)
+slowDownButton = None
+speedUpButton = None
 
-slowDownButton = Button(root, text = "Slow down", command = slowDown, anchor = W, font=fontButton)
-slowDownButton.configure(width = 5, activebackground = "#33B5E5", relief = FLAT)
-slowDownButton_window = c.create_window(142+7, 10, anchor=NW, window=slowDownButton)
+for i, (buttonText, buttonCommand) in enumerate(buttonData):
+    button = Button(buttonFrame, text=buttonText, command=buttonCommand, anchor="w", font=fontButton)
+    button.configure(activebackground="#33B5E5", relief="flat")
+    button.pack(side=LEFT, padx=5)
 
-pauseButton = Button(root, text = "Pause", command = pause, anchor = W, font=fontButton)
-pauseButton.configure(width = 5, activebackground = "#33B5E5", relief = FLAT)
-pauseButton_window = c.create_window(194+7, 10, anchor=NW, window=pauseButton)
-
-playButton = Button(root, text = "Continue", command = play, anchor = W, font=fontButton)
-playButton.configure(width = 6, activebackground = "#33B5E5", relief = FLAT)
-playButton_window = c.create_window(246+7, 10, anchor=NW, window=playButton)
+    if buttonText == "Speed up":
+        speedUpButton = button
+    elif buttonText == "Slow down":
+        slowDownButton = button
 
 scrollbar = Scrollbar(root)
 scrollbar.pack(side=RIGHT, fill=Y)
@@ -74,12 +77,6 @@ listbox = Listbox(root, height=800, width=200, font=font, yscrollcommand=scrollb
 listbox.pack(side=LEFT)
 
 scrollbar.config(command=listbox.yview)
-
-buttonFrame = Frame(root)
-buttonFrame.pack(side=TOP, anchor=NE)
-
-b1 = Button(buttonFrame, text="button")
-b1.pack(side=TOP)
 
 class Point:
     def __init__(self, x, y, index):

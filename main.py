@@ -11,7 +11,7 @@ class MainView(tk.Frame):
 
         vcmd = (self.register(self.onValidate), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         self.entry = tk.Entry(self, validate="key", validatecommand=vcmd, font=font)
-        self.entry.place(x=160, y=21)
+        self.entry.place(x=195, y=21, width=100)
 
         self.b1 = tk.Button(self, text="START", command=self.runAnimation, font=font, height=4, width=15)
         self.b1.place(x=110, y=90)
