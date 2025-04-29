@@ -12,7 +12,7 @@ import queue
 seed()
 
 root = Tk()
-root.title("Kruskal animacija")
+root.title("Kruskal animation")
 root.resizable(False, False)
 root.wm_geometry('1050x800')
 
@@ -47,23 +47,23 @@ def play():
     q.put("play")
 
 
-backButton = Button(root, text = "Korak nazad", command = stepBack, anchor = W, font=fontButton)
+backButton = Button(root, text = "Step back", command = stepBack, anchor = W, font=fontButton)
 backButton.configure(width = 10, activebackground = "#33B5E5", relief = FLAT)
 backButton_window = c.create_window(10, 10, anchor=NW, window=backButton)
 
-speedUpButton = Button(root, text = "Ubrzaj", command = speedUp, anchor = W, font=fontButton)
+speedUpButton = Button(root, text = "Speed up", command = speedUp, anchor = W, font=fontButton)
 speedUpButton.configure(width = 5, activebackground = "#33B5E5", relief = FLAT)
 speedUpButton_window = c.create_window(97, 10, anchor=NW, window=speedUpButton)
 
-slowDownButton = Button(root, text = "Uspori", command = slowDown, anchor = W, font=fontButton)
+slowDownButton = Button(root, text = "Slow down", command = slowDown, anchor = W, font=fontButton)
 slowDownButton.configure(width = 5, activebackground = "#33B5E5", relief = FLAT)
 slowDownButton_window = c.create_window(142+7, 10, anchor=NW, window=slowDownButton)
 
-pauseButton = Button(root, text = "Pauza", command = pause, anchor = W, font=fontButton)
+pauseButton = Button(root, text = "Pause", command = pause, anchor = W, font=fontButton)
 pauseButton.configure(width = 5, activebackground = "#33B5E5", relief = FLAT)
 pauseButton_window = c.create_window(194+7, 10, anchor=NW, window=pauseButton)
 
-playButton = Button(root, text = "Nastavi", command = play, anchor = W, font=fontButton)
+playButton = Button(root, text = "Continue", command = play, anchor = W, font=fontButton)
 playButton.configure(width = 6, activebackground = "#33B5E5", relief = FLAT)
 playButton_window = c.create_window(246+7, 10, anchor=NW, window=playButton)
 
@@ -78,7 +78,7 @@ scrollbar.config(command=listbox.yview)
 buttonFrame = Frame(root)
 buttonFrame.pack(side=TOP, anchor=NE)
 
-b1 = Button(buttonFrame, text="dugme")
+b1 = Button(buttonFrame, text="button")
 b1.pack(side=TOP)
 
 class Point:
@@ -165,12 +165,9 @@ class Graph:
 
     def generateSteps(self):
         result = [] 
-  
         i = 0 
         e = 0 
-  
         parent = [] ; rank = [] 
-  
         for node in range(self.V): 
             parent.append(node) 
             rank.append(0) 
@@ -188,12 +185,10 @@ class Graph:
             y = self.find(parent, v) 
 
             if x != y: 
-                
                 e = e + 1     
                 result.append([u,v,w]) 
                 self.union(parent, rank, x, y)   
                 
-           
             self.steps.append({
                 'stateBefore': stateBefore,
             })
@@ -210,10 +205,7 @@ class Graph:
             'stateBefore': stateBefore
         })
 
-
-  
     def KruskalMST(self): 
-
         i = 0 
         state = self.steps[i]['stateBefore']
 
@@ -232,10 +224,8 @@ class Graph:
             stateAfter = self.steps[i+1]['stateBefore']
             
             if len(state['result']) == len(stateAfter['result']):
-                # nije dodano
                 listbox.itemconfig(i+2, {'bg': 'white', 'fg': 'red'})
             else:
-                # dodano
                 self.edges[i].draw()
                 listbox.itemconfig(i+2, {'bg': 'white', 'fg': 'green'})
 
@@ -286,7 +276,7 @@ class Graph:
                 state = self.steps[i]['stateBefore']
                 if len(state['result']) == self.V - 1:
                     if self.hasCompletedOnce == False:
-                        messagebox.showinfo('Kruskal animacija', 'Algoritam je završio ali još možete vraćati korake.')
+                        messagebox.showinfo('Kruskal animation', 'The algorithm is complete, but you can still go back through the steps.')
                         self.hasCompletedOnce = True
                     paused = True
             
@@ -323,41 +313,41 @@ class Graph:
   
 
 def thread_function(n):
-    tacke = []
+    points = []
 
     for i in range(0, n):
-        dobar = False
-        while dobar == False:
+        valid = False
+        while valid == False:
             x = Point(randint(70, 750), randint(70, 750), i)
-            dobar = True
-            for j in tacke:
+            valid = True
+            for j in points:
                 if x.dist(j) < 50:
-                    dobar = False
+                    valid = False
                 
-        tacke.append(x)
+        points.append(x)
 
     size =  n
-    g = Graph(size, tacke)
+    g = Graph(size, points)
     for i in range(0, size):
         g.points[i].draw(20, nodeNotTaken)
         for j in range(0, size):
             if i < j:
-                g.addEdge(i, j, tacke[i].dist(tacke[j]))
+                g.addEdge(i, j, points[i].dist(points[j]))
 
-    listbox.insert(END, "Nesortirane veze:")
-    listbox.insert(END, "(cvor1, cvor2) = udaljenost")
+    listbox.insert(END, "Unsorted edges:")
+    listbox.insert(END, "(node1, node2) = distance")
     for node in g.graph:
         u,v,w = node
         listbox.insert(END, "("+str(u)+","+str(v)+") = "+str(round(w, 2)))
   
-    messagebox.showinfo("Kruskal animacija", "Veze nisu sortirane, sada će se sortirati.")
+    messagebox.showinfo("Kruskal animation", "Edges are unsorted, they will now be sorted.")
     sleep(1)
 
     g.graph =  sorted(g.graph,key=lambda item: item[2]) 
 
     listbox.delete(0, END)
-    listbox.insert(END, "Sortirane veze:")
-    listbox.insert(END, "(cvor1, cvor2) = udaljenost")
+    listbox.insert(END, "Sorted edges:")
+    listbox.insert(END, "(node1, node2) = distance")
     for node in g.graph:
         u,v,w = node
         g.edges.append(Edge(g.points[u], g.points[v]))
@@ -367,12 +357,12 @@ def thread_function(n):
 
     g.KruskalMST() 
 
-    print("zavrsio")
+    print("finished")
 
         
-numberOrVerticies = int(sys.argv[1])
+numberOfVertices = int(sys.argv[1])
 
-x = threading.Thread(target=thread_function, args=(numberOrVerticies,))
+x = threading.Thread(target=thread_function, args=(numberOfVertices,))
 x.daemon = True
 x.start()
 
